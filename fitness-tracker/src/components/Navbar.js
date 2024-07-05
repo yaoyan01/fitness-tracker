@@ -19,6 +19,7 @@ const Navbar = () => {
             <Link to='/'>Fitness Go</Link>
             <div className='flex justify-center'>
                 <Link to='/meal-log'>Meal Log</Link>
+                <Link to='/food'>Food</Link>
                 <button onClick={handleLogout}>Logout</button>
             </div>
         </div>

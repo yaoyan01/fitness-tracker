@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import MealLogPage from "./main/Meals/meals";
 import { useState, useEffect } from "react";
 import LoginPage from "./components/Login";
+import SignUpPage from "./components/Signup";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -36,12 +37,16 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/meal-log" element={<MealLogPage />} />
+            <Route path="/food" element={<MealLogPage />} />
+            <Route path="/food/create" element={<MealLogPage />} />
+            <Route path="/food/:foodId" element={<MealLogPage />} />
             <Route path="*" element={<Navigate to="/meal-log" />} />
           </Routes>
         </>
       ) : (
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signUp" element={<SignUpPage />} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       )}

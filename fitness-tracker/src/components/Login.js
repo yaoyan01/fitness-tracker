@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { supabase } from "../supabaseClient"
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 
 const LoginPage = () => {
@@ -43,6 +44,7 @@ const LoginPage = () => {
                     <input type='password' value={password} onChange={handlePassword} placeholder="Password" required></input>
                     <button type='submit'>Login</button>
                 </form>
+                <Link to='/signUp'>Sign Up</Link>
             </div></>
     )
 }
