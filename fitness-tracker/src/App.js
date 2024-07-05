@@ -5,6 +5,7 @@ import MealLogPage from "./main/Meals/meals";
 import { useState, useEffect } from "react";
 import LoginPage from "./components/Login";
 import SignUpPage from "./components/Signup";
+import CreateMealPage from "./main/Meals/createMeal";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -37,7 +38,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/meal-log" element={<MealLogPage />} />
-            <Route path="/food" element={<MealLogPage />} />
+            <Route path="/meal-log/create" element={<CreateMealPage />} />
             <Route path="/food/create" element={<MealLogPage />} />
             <Route path="/food/:foodId" element={<MealLogPage />} />
             <Route path="*" element={<Navigate to="/meal-log" />} />

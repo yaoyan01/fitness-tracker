@@ -1,5 +1,6 @@
 import { supabase } from "../../supabaseClient"
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 
 
@@ -24,6 +25,7 @@ const MealLogPage = () => {
 
     return (<>
         <p>MEAL PAGE</p>
+        <Link to='/meal-log/create'>Add Meal</Link>
     </>)
 }
 
