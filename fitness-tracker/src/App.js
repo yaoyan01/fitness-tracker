@@ -7,17 +7,27 @@ import LoginPage from "./components/Login";
 
 function App() {
   const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const fetchSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setSession(session);
+      setLoading(false);
+    };
+
+    fetchSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
+    return () => subscription.unsubscribe();
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>; 
+  }
 
   return (
     <Router>
@@ -26,7 +36,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/meal-log" element={<MealLogPage />} />
-            <Route path="/" element={<Navigate to="/meal-log" />} />
+            <Route path="*" element={<Navigate to="/meal-log" />} />
           </Routes>
         </>
       ) : (
