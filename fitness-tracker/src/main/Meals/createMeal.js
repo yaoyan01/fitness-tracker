@@ -1,36 +1,77 @@
-import { useState, useEffect } from "react"
-import { supabase } from "../../supabaseClient"
+import { useState, useEffect } from "react";
+import { supabase } from "../../supabaseClient";
 
 const CreateMealPage = () => {
-    const [meal, setMeal] = useState()
+    const [allFoods, setAllFoods] = useState([]);
+    const [selectedFoods, setSelectedFoods] = useState([]);
+    const [user, setUser] = useState(null);
 
-    const [allFoods, setAllFoods] = useState();
+    useEffect(() => {
+        fetchUser();
+        fetchAllFoods();
+    }, []);
+
+    const fetchUser = async () => {
+        try {
+            const { data, error } = await supabase.auth.getUser();
+            if (error) throw error;
+            setUser(data.user);
+        } catch (error) {
+            console.error('Error fetching user:', error);
+        }
+    };
 
     const fetchAllFoods = async () => {
         try {
-            const { data, error } = await supabase.from('food').select()
-            setAllFoods(data)
+            const { data, error } = await supabase.from('food').select();
+            if (error) throw error;
+            setAllFoods(data);
         } catch (error) {
-            console.log('Error Fetching All Foods')
+            console.error('Error fetching foods:', error);
         }
-    }
+    };
 
-    const handleCreateMeal = async () => {
+    const handleSaveMeal = async () => {
+        if (!user || selectedFoods.length === 0) return;
 
-        const { data, error } = await supabase.from().insert()
+        try {
+            // Create the meal
+            const { data: mealData, error: mealError } = await supabase
+                .from('meal')
+                .insert({ user: user.id })
+                .select()
+                .single();
 
-    }
+            if (mealError) throw mealError;
 
-    useEffect(() => { fetchAllFoods(); }, [])
+            // Add selected foods to the meal
+            const mealFoods = selectedFoods.map(sf => ({
+                mealId: mealData.id,
+                foodId: sf.foodId,
+                quantity: sf.quantity
+            }));
 
-    return (<>
+            const { error: mealFoodError } = await supabase
+                .from('mealfood')
+                .insert(mealFoods);
+
+            if (mealFoodError) throw mealFoodError;
+
+            console.log('Meal saved successfully');
+            // Reset selected foods or navigate away
+            setSelectedFoods([]);
+        } catch (error) {
+            console.error('Error saving meal:', error);
+        }
+    };
+
+    return (
         <div>
-            <div>
-
-            </div>
+            <button onClick={handleSaveMeal} disabled={selectedFoods.length === 0}>
+                Save Meal
+            </button>
         </div>
-    </>
     );
-}
+};
 
-export default CreateMealPage
+export default CreateMealPage;
