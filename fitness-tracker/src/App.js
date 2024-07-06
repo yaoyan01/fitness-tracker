@@ -8,9 +8,12 @@ import SignUpPage from "./components/Signup";
 import CreateMealPage from "./main/Meals/createMeal";
 
 function App() {
+  //global states 
+  //detecting if the user is logged in 
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  //upon loading in, check if there is a user signed in through supabase
   useEffect(() => {
     const fetchSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -27,12 +30,14 @@ function App() {
     return () => subscription.unsubscribe();
   }, []);
 
+  //to prevent page from fully loading in without the session being grabbed 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
     <Router>
+      {/* ADD ROUTES FOR THE APP HERE */}
       {session ? (
         <>
           <Navbar />
@@ -44,13 +49,14 @@ function App() {
             <Route path="*" element={<Navigate to="/meal-log" />} />
           </Routes>
         </>
-      ) : (
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signUp" element={<SignUpPage />} />
-          <Route path="*" element={<Navigate to="/login" />} />
-        </Routes>
-      )}
+      ) :
+          (
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signUp" element={<SignUpPage />} />
+              <Route path="*" element={<Navigate to="/login" />} />
+            </Routes>
+          )}
     </Router>
   );
 }

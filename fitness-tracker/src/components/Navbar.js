@@ -15,12 +15,14 @@ const Navbar = () => {
     };
 
     return (
-        <div className='bg-gray-300 flex justify-between'>
-            <Link to='/'>Fitness Go</Link>
-            <div className='flex justify-center'>
-                <Link to='/meal-log'>Meal Log</Link>
-                <Link to='/food'>Food</Link>
-                <button onClick={handleLogout}>Logout</button>
+        <div className='bg-[#272838] flex justify-between text-white p-5'>
+            <div className="container mx-auto flex justify-between items-center">
+                <Link to='/'>Fitness Go</Link>
+                <div className='space-x-2'>
+                    <Link to='/meal-log'>Meal Log</Link>
+                    <Link to='/food'>Food</Link>
+                    <button onClick={handleLogout}>Logout</button>
+                </div>
             </div>
         </div>
     );

@@ -26,11 +26,9 @@ const LoginPage = () => {
             })
             if (error) throw error
             console.log('User logged in:', user)
-            // Handle successful login (e.g., redirect to dashboard)
             navigate('/meal-log');
         } catch (error) {
             console.error('Error logging in:', error.message)
-            // Handle login error (e.g., show error message to user)
         }
 
     }

@@ -8,27 +8,27 @@ const CreateMealPage = () => {
 
     const fetchAllFoods = async () => {
         try {
-            const {data, error} = await supabase.from('food').select()
+            const { data, error } = await supabase.from('food').select()
             setAllFoods(data)
         } catch (error) {
             console.log('Error Fetching All Foods')
         }
     }
 
-    useEffect(()=>{fetchAllFoods();}, [])
-
     const handleCreateMeal = async () => {
 
-        const {data, error} = await supabase.from().insert() 
+        const { data, error } = await supabase.from().insert()
 
     }
 
+    useEffect(() => { fetchAllFoods(); }, [])
+
     return (<>
-    <div>
         <div>
-            
+            <div>
+
+            </div>
         </div>
-    </div>
     </>
     );
 }
