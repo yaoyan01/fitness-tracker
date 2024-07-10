@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 import LoginPage from "./components/Login";
 import SignUpPage from "./components/Signup";
 import CreateMealPage from "./main/Meals/createMeal";
+import FoodPage from "./main/Food/viewFood";
+import AddFoodPage from "./main/Food/createFood";
+import ViewMealPage from "./main/Meals/viewMeal";
 
 function App() {
   //global states 
@@ -44,7 +47,9 @@ function App() {
           <Routes>
             <Route path="/meal-log" element={<MealLogPage />} />
             <Route path="/meal-log/create" element={<CreateMealPage />} />
-            <Route path="/food/create" element={<MealLogPage />} />
+            <Route path="/meal-log/view/:mealId" element={<ViewMealPage />} />
+            <Route path="/food" element={<FoodPage />} />
+            <Route path="/food/create" element={<AddFoodPage />} />
             <Route path="/food/:foodId" element={<MealLogPage />} />
             <Route path="*" element={<Navigate to="/meal-log" />} />
           </Routes>

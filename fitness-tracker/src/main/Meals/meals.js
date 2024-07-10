@@ -39,7 +39,9 @@ const MealLogPage = () => {
                     return (
                         <tr key={index}>
                             <td>
-                                {dayjs(meal.created_at).format('MMM/DD/YYYY')}
+                                <Link to={`/meal-log/view/${meal.id}/`}>
+                                    {dayjs(meal.created_at).format('MMM/DD/YYYY')}
+                                </Link>
                             </td>
                         </tr>
 
