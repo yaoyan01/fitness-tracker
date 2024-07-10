@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
 import Modal from "../../components/Modal";
+import { Link } from "react-router-dom";
 
 const CreateMealPage = () => {
     const [allFoods, setAllFoods] = useState([]);
@@ -113,53 +114,91 @@ const CreateMealPage = () => {
     }
 
     return (
-        <div>
-            <button onClick={handleOpenModal}>Add modal</button>
-            <Modal open={openModal} closeModal={handleCloseModal} data={allFoods} selectFood={handleSelectFood}>
-            </Modal>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Calories</th>
-                        <th>Protein</th>
-                        <th>Carbs</th>
-                        <th>Fat</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {allMealFoods.map((mealFood, index) => {
-                        const food = mealFood.food
-                        const quantity = mealFood.quantity
+        <div className="container mx-auto p-4">
+            <div className="flex justify-end mb-3">
+                <button
+                    onClick={handleOpenModal}
+                    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-3"
+                >
+                    Add Food
+                </button>
 
-                        return (
-                            <tr key={index}>
-                                <td>{food.name}</td>
-                                <td>
-                                    <div>
-                                        <button onClick={() => (changeQuantity(index, 'subtract'))}>-</button>
-                                        {quantity}
-                                        <button onClick={() => (changeQuantity(index, 'add'))}>+</button>
-                                    </div>
-                                </td>
-                                <td>{food.calories * quantity}</td>
-                                <td>{food.protein * quantity}</td>
-                                <td>{food.carbs * quantity}</td>
-                                <td>{food.fats * quantity}</td>
-                                <td>{food.sugar * quantity}</td>
-                                <td>
-                                    <button onClick={() => handleRemoveFood(index)}>Remove</button>
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-            <button onClick={handleSaveMeal} disabled={allMealFoods.length === 0}>
-                Save Meal
-            </button>
+                <Link
+                    onClick={handleSaveMeal}
+                    to='/'
+                    className=" bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed mr-3"
+                >
+                    Save Meal
+                </Link>
+
+                <Link
+                    to='/'
+                    className=" bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    Cancel
+                </Link>
+            </div>
+            <Modal open={openModal} closeModal={handleCloseModal} data={allFoods} selectFood={handleSelectFood} />
+
+            <div className="overflow-x-auto">
+                <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                    <thead className="bg-gray-200 text-gray-700">
+                        <tr>
+                            <th className="py-3 px-4 text-left">Name</th>
+                            <th className="py-3 px-4 text-left">Quantity</th>
+                            <th className="py-3 px-4 text-left">Calories</th>
+                            <th className="py-3 px-4 text-left">Protein</th>
+                            <th className="py-3 px-4 text-left">Carbs</th>
+                            <th className="py-3 px-4 text-left">Fat</th>
+                            <th className="py-3 px-4 text-left">Sugar</th>
+                            <th className="py-3 pl-4 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody className="text-gray-600">
+                        {allMealFoods.map((mealFood, index) => {
+                            const food = mealFood.food;
+                            const quantity = mealFood.quantity;
+                            return (
+                                <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
+                                    <td className="py-3 px-4">{food.name}</td>
+                                    <td className="py-3 px-4">
+                                        <div className="flex items-center">
+                                            <button
+                                                onClick={() => changeQuantity(index, 'subtract')}
+                                                className="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-l"
+                                            >
+                                                -
+                                            </button>
+                                            <span className="px-2">{quantity}</span>
+                                            <button
+                                                onClick={() => changeQuantity(index, 'add')}
+                                                className="bg-green-500 hover:bg-green-600 text-white py-1 px-2 rounded-r"
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td className="py-3 px-4">{food.calories * quantity}</td>
+                                    <td className="py-3 px-4">{food.protein * quantity}</td>
+                                    <td className="py-3 px-4">{food.carbs * quantity}</td>
+                                    <td className="py-3 px-4">{food.fats * quantity}</td>
+                                    <td className="py-3 px-4">{food.sugar * quantity}</td>
+                                    <td className="py-3 text-center">
+                                        <button
+                                            onClick={() => handleRemoveFood(index)}
+                                            className="bg-red-500 hover:bg-red-600 text-white  py-1 px-2 rounded"
+                                        >
+                                            Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
+
+
         </div>
     );
 };
