@@ -118,7 +118,7 @@ const CreateMealPage = () => {
             <div className="flex justify-end mb-3">
                 <button
                     onClick={handleOpenModal}
-                    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-3"
+                    className="bg-[#881700]  text-white hover:bg-[#642113] py-2 px-4 rounded mr-3"
                 >
                     Add Food
                 </button>
@@ -126,14 +126,14 @@ const CreateMealPage = () => {
                 <Link
                     onClick={handleSaveMeal}
                     to='/'
-                    className=" bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed mr-3"
+                    className="  border border-gray-300 text-[#881700] hover:bg-gray-50 py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed mr-3"
                 >
                     Save Meal
                 </Link>
 
                 <Link
                     to='/'
-                    className=" bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                    className=" bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     Cancel
                 </Link>
@@ -169,7 +169,7 @@ const CreateMealPage = () => {
                                             >
                                                 -
                                             </button>
-                                            <span className="px-2">{quantity}</span>
+                                            <span className="px-2">{quantity}{food.unit}</span>
                                             <button
                                                 onClick={() => changeQuantity(index, 'add')}
                                                 className="bg-green-500 hover:bg-green-600 text-white py-1 px-2 rounded-r"
